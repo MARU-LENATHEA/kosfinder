@@ -1,6 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'core/config/app_config.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Inisialisasi Supabase hanya jika SUPABASE_URL dan SUPABASE_ANON_KEY di-passing via --dart-define
+  if (AppConfig.isConfigured) {
+    await Supabase.initialize(
+      url: AppConfig.supabaseUrl,
+      anonKey: AppConfig.supabaseAnonKey, // ignore: deprecated_member_use
+    );
+  }
+
   runApp(const MyApp());
 }
 
